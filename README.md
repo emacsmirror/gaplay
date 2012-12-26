@@ -40,7 +40,7 @@ gaplay.el
 
     If you have installed git:
 
-            $ git clone git://github.com/te223/gapley-el.git
+            $ git clone git://github.com/te223/gaplay-el.git
 
     else:
     * go to <https://github.com/te223/gaplay-el>.

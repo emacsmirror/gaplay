@@ -4,7 +4,7 @@
 
 ;; Author: Tetsu Takaishi <tetsuhumi@aa.bb-east.ne.jp>
 ;; Created: Mon Nov 19 2012
-;; Version: 0.8.0
+;; Version: 0.8.1
 ;; Keywords: multimedia
 
 ;; This program is free software: you can redistribute it and/or modify
@@ -60,7 +60,7 @@
 ;; 
 ;;   2. Getting the source files (`gaplay.el` and `gaplay.py`)
 ;;     If you have installed git:
-;;	 $ git clone git://github.com/te223/gapley-el.git
+;;	 $ git clone git://github.com/te223/gaplay-el.git
 ;;     else:
 ;;       * go to <https://github.com/te223/gaplay-el>.
 ;;       * click `ZIP` icon to download source code as zip archive.
@@ -155,7 +155,7 @@ FMT and ARGS are same as `(message FMT ARG ...)'"
   (if gaplay-debug-mode `(gaplay-log-message "*gaplay-log*" ,fmt ,@args) nil))
 
 ;; *********** Define Variable *****************************************
-(defconst gaplay-version "0.8.0")
+(defconst gaplay-version "0.8.0p1")
 (gaplay-defvar gaplay-python-command
 	       ;; "/opt/local/bin/python" ;; when installed by MacPorts
 	       ;; "/usr/local/bin/python" ;; 
