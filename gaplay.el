@@ -155,7 +155,7 @@ FMT and ARGS are same as `(message FMT ARG ...)'"
   (if gaplay-debug-mode `(gaplay-log-message "*gaplay-log*" ,fmt ,@args) nil))
 
 ;; *********** Define Variable *****************************************
-(defconst gaplay-version "0.8.0p1")
+(defconst gaplay-version "0.8.1")
 (gaplay-defvar gaplay-python-command
 	       ;; "/opt/local/bin/python" ;; when installed by MacPorts
 	       ;; "/usr/local/bin/python" ;; 
@@ -424,6 +424,7 @@ turning on gaplay-mode runs the hook `gaplay-mode-hook'."
     (set (make-local-variable 'gaplay-shuffle-mode) nil)
     ;; show/hide keybindings help
     (set (make-local-variable 'gaplay-keybindings-visible) t)
+    ;; (set (make-local-variable 'transient-mark-mode) nil) 
 
     ;; run hook
     (run-hooks 'gaplay-mode-hook)
@@ -455,7 +456,8 @@ turning on gaplay-mode runs the hook `gaplay-mode-hook'."
       )
 
     ;; set local kill-buffer-hook
-    (make-local-hook 'kill-buffer-hook) ;; no need since 21.1
+    (if (fboundp 'make-local-hook) 
+	(make-local-hook 'kill-buffer-hook)) ;; no need since 21.1
     (add-hook 'kill-buffer-hook 'gaplay-kill-buffer-handler nil t)
     ;; set local post-command-hook
 
@@ -1323,7 +1325,10 @@ TIMESTRING: mm:ss or hh:mm:ss"
 	(let ((tmline (gaplay-find-anchor 'timeline)))
 	  (if (and (<= (gaplay-anchor:start tmline)  pntsv)
 		   (< pntsv (gaplay-anchor:end tmline)))
-	      (goto-char pntsv))))
+	      (progn
+		;; (set-mark pntsv)
+		(deactivate-mark)
+		(goto-char pntsv)))))
     ))
      
 
@@ -1795,7 +1800,8 @@ If no bitrate data return nil"
 		   (setq truncate-lines t) ;; no wrap
 		   (setq line-spacing 0.15)
 		   (setq gaplay-player-buffer player-buffer)
-		   (make-local-hook 'kill-buffer-hook) ;; no need since 21.1
+		   (if (fboundp 'make-local-hook) 
+		       (make-local-hook 'kill-buffer-hook)) ;; no need since 21.1
 		   (add-hook 'kill-buffer-hook
 			     #'(lambda () 
 				 (if (markerp gaplay-play-marker)
